@@ -2846,6 +2846,18 @@ dependencies = [
 ]
 
 [[package]]
+name = "tauri-remix"
+version = "0.0.0"
+dependencies = [
+ "portpicker",
+ "serde",
+ "serde_json",
+ "tauri",
+ "tauri-build",
+ "tauri-plugin-localhost",
+]
+
+[[package]]
 name = "tauri-runtime"
 version = "0.10.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -2910,18 +2922,6 @@ dependencies = [
  "url",
  "walkdir",
  "windows 0.37.0",
-]
-
-[[package]]
-name = "taurine"
-version = "0.0.0"
-dependencies = [
- "portpicker",
- "serde",
- "serde_json",
- "tauri",
- "tauri-build",
- "tauri-plugin-localhost",
 ]
 
 [[package]]

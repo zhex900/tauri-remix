@@ -1,6 +1,6 @@
-import execa from 'execa';
-import fs from 'node:fs';
-import { oraPromise } from 'ora';
+import execa from "execa";
+import fs from "node:fs";
+import { oraPromise } from "ora";
 
 /**
  * This function is used to rename the binary with the platform specific postfix.
@@ -8,17 +8,17 @@ import { oraPromise } from 'ora';
  */
 
 async function moveBinaries() {
-  let extension = '';
+  let extension = "";
 
-  if (process.platform === 'win32') {
-    extension = '.exe'
+  if (process.platform === "win32") {
+    extension = ".exe";
   }
 
-  const rustInfo = (await execa('rustc', ['-vV'])).stdout;
+  const rustInfo = (await execa("rustc", ["-vV"])).stdout;
   const targetTriple = /host: (\S+)/g.exec(rustInfo)[1];
 
   if (!targetTriple) {
-    console.error('Failed to determine platform target triple')
+    console.error("Failed to determine platform target triple");
   }
 
   fs.renameSync(
@@ -32,8 +32,11 @@ async function moveBinaries() {
  * that we need to create typesafety within tRPC
  */
 async function createBundle() {
-  return execa('node_modules/.bin/esbuild', [
-    './server', '--bundle', '--outfile=dist/server.js', '--platform=node'
+  return execa("node_modules/.bin/esbuild", [
+    "./server",
+    "--bundle",
+    "--outfile=dist/server.js",
+    "--platform=node",
   ]);
 }
 
@@ -41,7 +44,11 @@ async function createBundle() {
  * This function is used to create single executable from server file and nodejs
  */
 async function createServerPackage() {
-  return execa('node_modules/.bin/pkg', ['package.json', '--output', 'src-tauri/binaries/app']);
+  return execa("node_modules/.bin/pkg", [
+    "package.json",
+    "--output",
+    "src-tauri/binaries/app",
+  ]);
 }
 
 async function main() {
@@ -54,4 +61,8 @@ async function main() {
   }
 }
 
-oraPromise(main, { text: '[TAURINE] Building server...\n', successText: '[TAURINE] Done\n', failText: '[TAURINE] Cannot build server'});
+oraPromise(main, {
+  text: "[TAURI] Building server...\n",
+  successText: "[TAURI] Done\n",
+  failText: "[Tauri] Cannot build server",
+});
