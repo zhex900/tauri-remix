@@ -33,9 +33,9 @@ async function moveBinaries() {
  */
 async function createBundle() {
   return execa("node_modules/.bin/esbuild", [
-    "./server",
+    "./remix-server.mjs",
     "--bundle",
-    "--outfile=dist/server.js",
+    "--outfile=build/server.js",
     "--platform=node",
   ]);
 }
@@ -45,7 +45,7 @@ async function createBundle() {
  */
 async function createServerPackage() {
   return execa("node_modules/.bin/pkg", [
-    "package.json",
+    "build/server.js",
     "--output",
     "src-tauri/binaries/app",
   ]);

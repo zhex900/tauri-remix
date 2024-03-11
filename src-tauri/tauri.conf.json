@@ -17,7 +17,12 @@
         "scope": [
           {
             "name": "binaries/app",
-            "sidecar": true
+            "sidecar": true,
+            "args": [
+              {
+                "validator": "\\S+"
+              }
+            ]
           }
         ]
       }
@@ -46,7 +51,7 @@
         "providerShortName": null,
         "signingIdentity": null
       },
-      "resources": [],
+      "resources": ["binaries/public"],
       "shortDescription": "",
       "targets": "all",
       "windows": {

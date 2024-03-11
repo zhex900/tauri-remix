@@ -2,19 +2,24 @@ import { listen, TauriEvent } from "@tauri-apps/api/event";
 import { Command } from "@tauri-apps/api/shell";
 
 import "./App.css";
+import { resourceDir } from "@tauri-apps/api/path";
 
 /**
  * Running NodeJS process as a sidecar
  */
-const cmd = Command.sidecar("binaries/app");
+resourceDir().then((resourcePath) => {
+  const cmd = Command.sidecar(`binaries/app`, [
+    `${resourcePath}binaries/public`,
+  ]);
 
-cmd.spawn().then((child) => {
-  /**
-   * Killing server process when window is closed. Probably won't
-   * work for multi window application
-   */
-  listen(TauriEvent.WINDOW_DESTROYED, function () {
-    child.kill();
+  cmd.spawn().then((child) => {
+    /**
+     * Killing server process when window is closed. Probably won't
+     * work for multi window application
+     */
+    listen(TauriEvent.WINDOW_DESTROYED, function () {
+      child.kill();
+    });
   });
 });
 
